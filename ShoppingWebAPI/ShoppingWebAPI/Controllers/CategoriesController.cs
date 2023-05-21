@@ -8,12 +8,12 @@ namespace ShoppingWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController] // todo controlador debe llear este datanotation por default
-    public class CountriesController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
         private readonly DataBaseContext _context;
 
 
-        public CountriesController(DataBaseContext context)
+        public CategoriesController(DataBaseContext context)
         {
             _context = context;  // el _Context nos trae por debajo toda la conexion a la BD
         }
@@ -26,13 +26,13 @@ namespace ShoppingWebAPI.Controllers
         [HttpGet]
         [Route("Get")]
 
-        public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            var countries = await _context.categories.ToListAsync();
+            var categories = await _context.Categories.ToListAsync();
 
-            if (countries == null) return NotFound();
+            if (categories == null) return NotFound();
 
-            return countries;
+            return Ok(categories);
         }
 
         // Esta nueva accion es para traerme un pais en particular por id
@@ -40,13 +40,13 @@ namespace ShoppingWebAPI.Controllers
         [HttpGet, ActionName("Get")]
         [Route("Get/{id}")]
 
-        public async Task<ActionResult<Country>> GetCountryById(Guid? id)
+        public async Task<ActionResult<Category>> GetCategoryById(Guid? id)
         {
-            var country = await _context.categories.FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (country == null) return NotFound();
+            if (category == null) return NotFound();
 
-            return Ok(country);
+            return Ok(category);
         }
 
         // Accion para agregar o crear un nuevo país
@@ -54,28 +54,28 @@ namespace ShoppingWebAPI.Controllers
         [HttpPost, ActionName("Create")]
         [Route("Create")]
 
-        public async Task<ActionResult> CreateCountry(Country country) 
+        public async Task<ActionResult> CreateCategory(Category category) 
         {
             try
             {
-                country.Id = Guid.NewGuid();
-                country.CreatedDate = DateTime.Now;
+                category.Id = Guid.NewGuid();
+                category.CreatedDate = DateTime.Now;
 
-                _context.categories.Add(country);
+                _context.Categories.Add(category);
                 await _context.SaveChangesAsync(); // Aquí es donde se hace el insert
 
             }
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException.Message.Contains("Duplicate"))
-                    return Conflict(String.Format("{0} ya existe", country.Name));
+                    return Conflict(String.Format("{0} ya existe", category.Name));
             }
             catch (Exception ex) 
             {
                 return Conflict(ex.Message);
             }
 
-            return Ok(country);
+            return Ok(category);
            
         }
 
@@ -84,29 +84,29 @@ namespace ShoppingWebAPI.Controllers
         [HttpPut, ActionName("Edit")]
         [Route("Edit/{id}")]
 
-        public async Task<ActionResult> EditCountry(Guid? id, Country country)
+        public async Task<ActionResult> EditCategory(Guid? id, Category category)
         {
             try
             {
-                if (id != country.Id) return NotFound("Country no found");
+                if (id != category.Id) return NotFound("Category no found");
 
-                country.ModifiedDate = DateTime.Now;
+                category.ModifiedDate = DateTime.Now;
 
-                _context.categories.Update(country);
+                _context.Categories.Update(category);
                 await _context.SaveChangesAsync(); // Aquí es donde se hace el update
 
             }
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException.Message.Contains("Duplicate"))
-                    return Conflict(String.Format("{0} ya existe", country.Name));
+                    return Conflict(String.Format("{0} ya existe", category.Name));
             }
             catch (Exception ex)
             {
                 return Conflict(ex.Message);
             }
 
-            return Ok(country);
+            return Ok(category);
 
         }
 
@@ -114,17 +114,17 @@ namespace ShoppingWebAPI.Controllers
 
         [HttpDelete, ActionName("Delete")]
         [Route("Delete/{id}")]
-        public async Task<ActionResult> DeleteCountry(Guid? id)
+        public async Task<ActionResult> DeleteCategory(Guid? id)
         {
             if (_context.categories == null) return Problem("Entity set 'DataBaseContext.categories' is null");
-            var country = await _context.categories.FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _context.categories.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (country == null) return NotFound("Country no found");  // or NotFound("Country no found");
+            if (category == null) return NotFound("Category no found");  // or NotFound("Category no found");
 
-            _context.categories.Remove(country);
+            _context.categories.Remove(category);
             await _context.SaveChangesAsync(); // Aquí se le hace el delete..
 
-            return Ok(String.Format("El pais {0} fue eliminado!! ",country.Name));
+            return Ok(String.Format("El pais {0} fue eliminado!! ",category.Name));
         }
     }
 }

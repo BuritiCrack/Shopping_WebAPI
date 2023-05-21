@@ -26,9 +26,9 @@ namespace ShoppingWebAPI.Migrations
                 {
                     table.PrimaryKey("PK_States", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_States_Countries_CountryId",
+                        name: "FK_States_categories_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Countries",
+                        principalTable: "categories",
                         principalColumn: "Id");
                 });
 

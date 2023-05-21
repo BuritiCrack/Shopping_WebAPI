@@ -76,7 +76,7 @@ namespace ShoppingWebAPI.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Countries");
+                    b.ToTable("categories");
                 });
 #pragma warning restore 612, 618
         }

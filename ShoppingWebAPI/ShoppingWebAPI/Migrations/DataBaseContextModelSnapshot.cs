@@ -103,7 +103,7 @@ namespace ShoppingWebAPI.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Countries");
+                    b.ToTable("categories");
                 });
 
             modelBuilder.Entity("ShoppingWebAPI.DAL.Entities.State", b =>

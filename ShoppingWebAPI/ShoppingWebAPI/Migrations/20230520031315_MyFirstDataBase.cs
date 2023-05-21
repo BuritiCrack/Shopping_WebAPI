@@ -12,7 +12,7 @@ namespace ShoppingWebAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Countries",
+                name: "categories",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -22,12 +22,12 @@ namespace ShoppingWebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.Id);
+                    table.PrimaryKey("PK_categories", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Countries_Name",
-                table: "Countries",
+                name: "IX_categories_Name",
+                table: "categories",
                 column: "Name",
                 unique: true);
         }
@@ -36,7 +36,7 @@ namespace ShoppingWebAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Countries");
+                name: "categories");
         }
     }
 }

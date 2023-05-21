@@ -10,7 +10,7 @@ namespace ShoppingWebAPI.DAL
 
         }
 
-        public DbSet<Country> Countries { get; set; } // Countries es el nombre de la tabla por eso simepre van en plural
+        public DbSet<Country> categories { get; set; } // categories es el nombre de la tabla por eso simepre van en plural
         public DbSet<Category> Categories { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<City> Cities { get; set; }
