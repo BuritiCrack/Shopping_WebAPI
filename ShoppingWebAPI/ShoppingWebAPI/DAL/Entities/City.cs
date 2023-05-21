@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace ShoppingWebAPI.DAL.Entities
 {
-    public class Country : Entity
+    public class City : Entity
     {
         [Required(ErrorMessage = "El campo {0} es obligatorio")] // Not null
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener como maximo {1} caracteres")]
@@ -11,9 +11,9 @@ namespace ShoppingWebAPI.DAL.Entities
         public string Name { get; set; }
 
         [Display(Name = "Estado")]
-        public ICollection<State> States { get; set; }
+        public State State { get; set; }
 
-        public int StatesNumber => States == null ? 0 : States.Count;
-
+        [Required] // Not null
+        public Guid StateId { get; set; }
     }
 }
